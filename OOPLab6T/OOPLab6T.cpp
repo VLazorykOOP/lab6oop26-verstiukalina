@@ -621,3 +621,55 @@ void vvidRandomnoVsikhZadach() {
     vvidRandomnoZadacha2();
     vvidRandomnoZadacha3();
 }
+
+int main() {
+    SetConsoleOutputCP(1251);
+    SetConsoleCP(1251);
+    srand(static_cast<unsigned int>(time(0)));
+
+    int vybir;
+
+    do {
+        cout << "\nМЕНЮ\n";
+        cout << "1. Задача 1\n";
+        cout << "2. Задача 2\n";
+        cout << "3. Задача 3\n";
+        cout << "4. Запустити всі тести\n";
+        cout << "5. Ввід з клавіатури для всіх задач\n";
+        cout << "6. Ввід з файлу для всіх задач\n";
+        cout << "7. Ввід random для всіх задач\n";
+        cout << "0. Вийти\n";
+        cout << "Ваш вибір: ";
+        cin >> vybir;
+
+        switch (vybir) {
+        case 1:
+            zadacha1();
+            break;
+        case 2:
+            zadacha2();
+            break;
+        case 3:
+            zadacha3();
+            break;
+        case 4:
+            zapustytyTesty();
+            break;
+        case 5:
+            vvidZKlaviaturyVsikhZadach();
+            break;
+        case 6:
+            vvidZFailyVsikhZadach();
+            break;
+        case 7:
+            vvidRandomnoVsikhZadach();
+            break;
+        case 0:
+            cout << "Програму завершено.\n";
+            break;
+        default:
+            cout << "Неправильний вибір.\n";
+        }
+    } while (vybir != 0);
+    return 0;
+}
