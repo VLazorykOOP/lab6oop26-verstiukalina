@@ -459,3 +459,165 @@ public:
     }
 };
 
+class Pratsivnyk : virtual public Liudyna {
+protected:
+    int zarplata;
+
+public:
+    Pratsivnyk() : zarplata(20000) {
+        cout << "Клас Pratsivnyk створено\n";
+    }
+
+    Pratsivnyk(int v, int z) : Liudyna(v), zarplata(z) {
+        cout << "Клас Pratsivnyk створено\n";
+    }
+
+    ~Pratsivnyk() override {
+        cout << "Клас Pratsivnyk видалено\n";
+    }
+
+    void pokazaty() override {
+        cout << "Працівник\n";
+        cout << "Вік: " << vik << endl;
+        cout << "Зарплата: " << zarplata << endl;
+    }
+
+    void pratsiuvaty() {
+        cout << "Працівник працює\n";
+    }
+};
+
+class BatkoSimeistva : virtual public Liudyna {
+protected:
+    int dity;
+
+public:
+    BatkoSimeistva() : dity(2) {
+        cout << "Клас BatkoSimeistva створено\n";
+    }
+
+    BatkoSimeistva(int v, int d) : Liudyna(v), dity(d) {
+        cout << "Клас BatkoSimeistva створено\n";
+    }
+
+    ~BatkoSimeistva() override {
+        cout << "Клас BatkoSimeistva видалено\n";
+    }
+
+    void pokazaty() override {
+        cout << "Батько сімейства\n";
+        cout << "Вік: " << vik << endl;
+        cout << "Кількість дітей: " << dity << endl;
+    }
+
+    void pikluvatysiaProSimiu() {
+        cout << "Батько піклується про сім'ю\n";
+    }
+};
+
+class PratsivnykBatkoSimeistva : public Pratsivnyk, public BatkoSimeistva {
+private:
+    int dosvid;
+
+public:
+    PratsivnykBatkoSimeistva() : dosvid(10) {
+        cout << "Клас PratsivnykBatkoSimeistva створено\n";
+    }
+
+    PratsivnykBatkoSimeistva(int v, int z, int d, int dos)
+        : Liudyna(v), Pratsivnyk(v, z), BatkoSimeistva(v, d), dosvid(dos) {
+        cout << "Клас PratsivnykBatkoSimeistva створено\n";
+    }
+
+    ~PratsivnykBatkoSimeistva() override {
+        cout << "Клас PratsivnykBatkoSimeistva видалено\n";
+    }
+
+    void pokazaty() override {
+        cout << "Працівник-батько сімейства\n";
+        cout << "Вік: " << vik << endl;
+        cout << "Зарплата: " << zarplata << endl;
+        cout << "Кількість дітей: " << dity << endl;
+        cout << "Досвід роботи: " << dosvid << endl;
+    }
+};
+
+void zadacha3() {
+    cout << "\nЗАДАЧА 3\n";
+    cout << "Віртуальні базові класи: людина, працівник, батько сімейства\n\n";
+
+    Liudyna liudyna;
+    Pratsivnyk pratsivnyk;
+    BatkoSimeistva batko;
+    PratsivnykBatkoSimeistva pratsivnykBatko;
+
+    cout << "\nІнформація про об'єкти:\n";
+    liudyna.pokazaty();
+    cout << endl;
+    pratsivnyk.pokazaty();
+    pratsivnyk.pratsiuvaty();
+    cout << endl;
+    batko.pokazaty();
+    batko.pikluvatysiaProSimiu();
+    cout << endl;
+    pratsivnykBatko.pokazaty();
+    pratsivnykBatko.pratsiuvaty();
+    pratsivnykBatko.pikluvatysiaProSimiu();
+
+    cout << "\nРозміри класів:\n";
+    cout << "sizeof(Liudyna) = " << sizeof(Liudyna) << " байт\n";
+    cout << "sizeof(Pratsivnyk) = " << sizeof(Pratsivnyk) << " байт\n";
+    cout << "sizeof(BatkoSimeistva) = " << sizeof(BatkoSimeistva) << " байт\n";
+    cout << "sizeof(PratsivnykBatkoSimeistva) = " << sizeof(PratsivnykBatkoSimeistva) << " байт\n";
+}
+
+void vykonatyZadachu3ZDanymy(int vik, int zarplata, int dity, int dosvid) {
+    PratsivnykBatkoSimeistva pratsivnykBatko(vik, zarplata, dity, dosvid);
+
+    cout << "\nДані працівника-батька сімейства:\n";
+    pratsivnykBatko.pokazaty();
+    pratsivnykBatko.pratsiuvaty();
+    pratsivnykBatko.pikluvatysiaProSimiu();
+}
+
+void vvidZKlaviaturyZadacha3() {
+    int v, z, d, dos;
+    cout << "Введіть вік, зарплату, кількість дітей, досвід: ";
+    cin >> v >> z >> d >> dos;
+    vykonatyZadachu3ZDanymy(v, z, d, dos);
+}
+
+void vvidZFailyZadacha3() {
+    int v, z, d, dos;
+    ifstream file("zadacha3.txt");
+    file >> v >> z >> d >> dos;
+    vykonatyZadachu3ZDanymy(v, z, d, dos);
+}
+
+void vvidRandomnoZadacha3() {
+    vykonatyZadachu3ZDanymy(18 + rand() % 50, vypadkoveChyslo() * 1000, rand() % 5 + 1, rand() % 30 + 1);
+}
+
+void zapustytyTesty() {
+    zadacha1();
+    zadacha2();
+    zadacha3();
+}
+
+void vvidZKlaviaturyVsikhZadach() {
+    vvidZKlaviaturyZadacha1();
+    vvidZKlaviaturyZadacha2();
+    vvidZKlaviaturyZadacha3();
+}
+
+void vvidZFailyVsikhZadach() {
+    vvidZFailyZadacha1();
+    vvidZFailyZadacha2();
+    vvidZFailyZadacha3();
+}
+
+void vvidRandomnoVsikhZadach() {
+    vvidRandomnoZadacha1();
+    vvidRandomnoZadacha2();
+    vvidRandomnoZadacha3();
+}
