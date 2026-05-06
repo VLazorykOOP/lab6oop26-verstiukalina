@@ -249,3 +249,213 @@ void vvidZFailyZadacha1() {
 void vvidRandomnoZadacha1() {
     vykonatyZadachu1ZDanymy(vypadkoveChyslo(), vypadkoveChyslo(), vypadkoveChyslo(), vypadkoveChyslo(), vypadkoveChyslo());
 }
+
+class Dani {
+public:
+    Dani() {
+        cout << "Клас Dani створено\n";
+    }
+
+    virtual ~Dani() {
+        cout << "Клас Dani видалено\n";
+    }
+
+    virtual void pokazaty() = 0;
+    virtual void zberehty() = 0;
+    virtual void obrobyty() = 0;
+};
+
+class SyhnalniDani : public Dani {
+private:
+    int amplituda;
+    int chastota;
+
+public:
+    SyhnalniDani() : amplituda(10), chastota(50) {
+        cout << "Клас SyhnalniDani створено\n";
+    }
+
+    SyhnalniDani(int a, int ch) : amplituda(a), chastota(ch) {
+        cout << "Клас SyhnalniDani створено\n";
+    }
+
+    ~SyhnalniDani() override {
+        cout << "Клас SyhnalniDani видалено\n";
+    }
+
+    void pokazaty() override {
+        cout << "Сигнальні дані\n";
+        cout << "Амплітуда: " << amplituda << endl;
+        cout << "Частота: " << chastota << endl;
+    }
+
+    void zberehty() override {
+        ofstream file("syhnal.txt");
+        file << "Сигнальні дані\n";
+        file << "Амплітуда: " << amplituda << endl;
+        file << "Частота: " << chastota << endl;
+        file.close();
+        cout << "Сигнальні дані збережено у файл syhnal.txt\n";
+    }
+
+    void obrobyty() override {
+        amplituda = amplituda * 2;
+        cout << "Сигнальні дані оброблено\n";
+    }
+};
+
+class DaniRezultatuObrobky : public Dani {
+private:
+    int rezultat;
+
+public:
+    DaniRezultatuObrobky() : rezultat(100) {
+        cout << "Клас DaniRezultatuObrobky створено\n";
+    }
+
+    DaniRezultatuObrobky(int r) : rezultat(r) {
+        cout << "Клас DaniRezultatuObrobky створено\n";
+    }
+
+    ~DaniRezultatuObrobky() override {
+        cout << "Клас DaniRezultatuObrobky видалено\n";
+    }
+
+    void pokazaty() override {
+        cout << "Дані результату обробки\n";
+        cout << "Результат: " << rezultat << endl;
+    }
+
+    void zberehty() override {
+        ofstream file("rezultat.txt");
+        file << "Дані результату обробки\n";
+        file << "Результат: " << rezultat << endl;
+        file.close();
+        cout << "Дані результату збережено у файл rezultat.txt\n";
+    }
+
+    void obrobyty() override {
+        rezultat = rezultat + 10;
+        cout << "Дані результату оброблено\n";
+    }
+};
+
+class DopomizhniDani : public Dani {
+private:
+    int koefitsient;
+
+public:
+    DopomizhniDani() : koefitsient(5) {
+        cout << "Клас DopomizhniDani створено\n";
+    }
+
+    DopomizhniDani(int k) : koefitsient(k) {
+        cout << "Клас DopomizhniDani створено\n";
+    }
+
+    ~DopomizhniDani() override {
+        cout << "Клас DopomizhniDani видалено\n";
+    }
+
+    void pokazaty() override {
+        cout << "Допоміжні дані\n";
+        cout << "Коефіцієнт: " << koefitsient << endl;
+    }
+
+    void zberehty() override {
+        ofstream file("dopomizhni.txt");
+        file << "Допоміжні дані\n";
+        file << "Коефіцієнт: " << koefitsient << endl;
+        file.close();
+        cout << "Допоміжні дані збережено у файл dopomizhni.txt\n";
+    }
+
+    void obrobyty() override {
+        koefitsient = koefitsient * koefitsient;
+        cout << "Допоміжні дані оброблено\n";
+    }
+};
+
+void zadacha2() {
+    cout << "\nЗАДАЧА 2\n";
+    cout << "Абстрактний клас Dani та похідні класи\n\n";
+
+    Dani* dani[3];
+
+    dani[0] = new SyhnalniDani();
+    dani[1] = new DaniRezultatuObrobky();
+    dani[2] = new DopomizhniDani();
+
+    for (int i = 0; i < 3; i++) {
+        cout << endl;
+        dani[i]->pokazaty();
+        dani[i]->obrobyty();
+        dani[i]->pokazaty();
+        dani[i]->zberehty();
+    }
+
+    for (int i = 0; i < 3; i++) {
+        delete dani[i];
+    }
+}
+
+void vykonatyZadachu2ZDanymy(int amplituda, int chastota, int rezultat, int koefitsient) {
+    Dani* dani[3];
+
+    dani[0] = new SyhnalniDani(amplituda, chastota);
+    dani[1] = new DaniRezultatuObrobky(rezultat);
+    dani[2] = new DopomizhniDani(koefitsient);
+
+    for (int i = 0; i < 3; i++) {
+        cout << endl;
+        dani[i]->pokazaty();
+        dani[i]->obrobyty();
+        dani[i]->pokazaty();
+        dani[i]->zberehty();
+    }
+
+    for (int i = 0; i < 3; i++) {
+        delete dani[i];
+    }
+}
+
+void vvidZKlaviaturyZadacha2() {
+    int a, ch, r, k;
+    cout << "Введіть амплітуду, частоту, результат, коефіцієнт: ";
+    cin >> a >> ch >> r >> k;
+    vykonatyZadachu2ZDanymy(a, ch, r, k);
+}
+
+void vvidZFailyZadacha2() {
+    int a, ch, r, k;
+    ifstream file("zadacha2.txt");
+    file >> a >> ch >> r >> k;
+    vykonatyZadachu2ZDanymy(a, ch, r, k);
+}
+
+void vvidRandomnoZadacha2() {
+    vykonatyZadachu2ZDanymy(vypadkoveChyslo(), vypadkoveChyslo(), vypadkoveChyslo(), vypadkoveChyslo());
+}
+
+class Liudyna {
+protected:
+    int vik;
+
+public:
+    Liudyna() : vik(35) {
+        cout << "Клас Liudyna створено\n";
+    }
+
+    Liudyna(int v) : vik(v) {
+        cout << "Клас Liudyna створено\n";
+    }
+
+    virtual ~Liudyna() {
+        cout << "Клас Liudyna видалено\n";
+    }
+
+    virtual void pokazaty() {
+        cout << "Людина, вік: " << vik << endl;
+    }
+};
+
